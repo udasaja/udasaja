@@ -1,1 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dompet Pi - Demo</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 500px; margin: auto; }
+    textarea { width: 100%; height: 120px; padding: 10px; margin-top: 10px; }
+    button { padding: 10px; margin-top: 10px; width: 100%; }
+    .note { font-size: 0.9em; color: gray; margin-top: 20px; }
+    .important { color: red; }
+  </style>
+</head>
+<body>
 
+  <h2>Tempel Kunci Rahasia Anda untuk membuka kunci dompet Anda</h2>
+  
+  <textarea id="phrase" placeholder="Masukkan kata sandi 24 kata anda di sini"></textarea>
+  
+  <button onclick="savePhrase()">Buka kunci dengan frasa sandi</button>
+  
+  <p class="note">
+    Sebagai dompet non-custodial, kata sandi dompet Anda hanya dapat diakses secara eksklusif oleh Anda.
+    Pemulihan frasa sandi saat ini <strong class="important">tidak mungkin</strong>.
+  </p>
+
+  <p class="note">
+    Kehilangan frasa sandi Anda? Anda dapat membuat dompet baru, tetapi semua Pi Anda akan hilang.
+  </p>
+
+  <script>
+    function savePhrase() {
+      const phrase = document.getElementById("phrase").value.trim();
+      if (phrase.split(" ").length !== 24) {
+        alert("Frasa sandi harus terdiri dari 24 kata.");
+        return;
+      }
+      localStorage.setItem("walletPhrase", phrase);
+      alert("Frasa sandi disimpan di penyimpanan lokal browser.");
+    }
+
+    // (Optional) Load saved phrase if exists
+    window.onload = function() {
+      const saved = localStorage.getItem("walletPhrase");
+      if (saved) document.getElementById("phrase").value = saved;
+    }
+  </script>
+
+</body>
+</html>
